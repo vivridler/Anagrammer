@@ -1,0 +1,43 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Shuffle Word</title>
+  <style>
+    body { font-family: system-ui, -apple-system; padding: 1.5rem; }
+    .word { font-size: 2rem; }
+    button { margin-top: 1rem; }
+  </style>
+</head>
+<body>
+  <div class="word" id="output"></div>
+  <button id="again">Shuffle again</button>
+
+  <script>
+    function shuffleWord(word) {
+      const arr = word.split("");
+      for (let i = arr.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [arr[i], arr[j]] = [arr[j], arr[i]];
+      }
+      return arr.join("");
+    }
+
+    function getTerm() {
+      const params = new URLSearchParams(window.location.search);
+      return params.get("term") || "";
+    }
+
+    const term = getTerm();
+    const output = document.getElementById("output");
+
+    function update() {
+      output.textContent = shuffleWord(term);
+    }
+
+    document.getElementById("again").addEventListener("click", update);
+    update();
+  </script>
+</body>
+</html>
+
